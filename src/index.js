@@ -95,6 +95,7 @@ export default class RNPickerSelect extends PureComponent {
     }
 
     static getSelectedItem({ items, key, value }) {
+        let itemToDisplay = null
         let idx = items.findIndex((item) => {
             if (item.key && key) {
                 return isEqual(item.key, key);
@@ -102,10 +103,15 @@ export default class RNPickerSelect extends PureComponent {
             return isEqual(item.value, value);
         });
         if (idx === -1) {
-            idx = 0;
+            itemToDisplay = {
+                label: value,
+                value: value,
+            }
+        } else {
+            itemToDisplay = items[idx]
         }
         return {
-            selectedItem: items[idx] || {},
+            selectedItem: itemToDisplay || {},
             idx,
         };
     }
